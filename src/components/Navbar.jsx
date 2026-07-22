@@ -1,13 +1,39 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import AuthContext from "../context/AuthContext";
+import authApi from "../api/authApi";
 
 function Navbar() {
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Problems", path: "/problems" },
-    { name: "Submissions", path: "/submissions" },
-    { name: "Login", path: "/login" },
-    { name: "Register", path: "/register" },
-  ];
+  const { isAuthenticated, logout } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const navItems = isAuthenticated
+    ? [
+        { name: "Home", path: "/" },
+        { name: "Problems", path: "/problems" },
+        { name: "Submissions", path: "/submissions" },
+        { name: "Logout", path: null },
+      ]
+    : [
+        { name: "Home", path: "/" },
+        { name: "Problems", path: "/problems" },
+        { name: "Login", path: "/login" },
+        { name: "Register", path: "/register" },
+      ];
+
+  const handleLogout = async () => {
+    try {
+      await authApi.logout();
+
+      logout();
+
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <nav>
@@ -17,7 +43,11 @@ function Navbar() {
         {navItems.map((item) => {
           return (
             <li key={item.name}>
-              <Link to={item.path}>{item.name}</Link>
+              {item.name === "Logout" ? (
+                <button onClick={handleLogout}>{item.name}</button>
+              ) : (
+                <Link to={item.path}>{item.name}</Link>
+              )}
             </li>
           );
         })}

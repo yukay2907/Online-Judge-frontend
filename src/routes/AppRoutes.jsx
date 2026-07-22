@@ -6,6 +6,7 @@ import Problems from "../pages/Problems";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Submissions from "../pages/Submissions";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 function AppRoutes() {
   return (
