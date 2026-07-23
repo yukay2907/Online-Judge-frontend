@@ -37,36 +37,77 @@ function Submissions() {
   }
 
   return (
-    <div>
-      <h1>My Submissions</h1>
+    <div className="max-w-6xl mx-auto py-10 px-6">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-bold">My Submissions</h1>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Problem</th>
-            <th>Verdict</th>
-            <th>Language</th>
-            <th>Status</th>
-            <th>Runtime</th>
-            <th>Memory</th>
-            <th>Submitted At</th>
-          </tr>
-        </thead>
+        <span className="text-gray-500">{submissions.length} Total</span>
+      </div>
 
-        <tbody>
-          {submissions.map((submission) => (
-            <tr key={submission._id}>
-              <td>{submission.problem.title}</td>
-              <td>{submission.verdict}</td>
-              <td>{submission.language}</td>
-              <td>{submission.status}</td>
-              <td>{submission.runtime ?? "-"}</td>
-              <td>{submission.memory ?? "-"}</td>
-              <td>{new Date(submission.createdAt).toLocaleString()}</td>
+      <div className="overflow-hidden border rounded-xl shadow-sm">
+        <table className="w-full">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="text-left px-6 py-4">Problem</th>
+              <th className="text-left px-6 py-4">Verdict</th>
+              <th className="text-left px-6 py-4">Language</th>
+              <th className="text-left px-6 py-4">Status</th>
+              <th className="text-left px-6 py-4">Runtime</th>
+              <th className="text-left px-6 py-4">Memory</th>
+              <th className="text-left px-6 py-4">Submitted</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {submissions.map((submission) => (
+              <tr
+                key={submission._id}
+                className="border-t hover:bg-gray-50 transition"
+              >
+                <td className="px-6 py-4 font-medium">
+                  {submission.problem.title}
+                </td>
+
+                <td className="px-6 py-4">
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-medium
+                    ${
+                      submission.verdict === "Accepted"
+                        ? "bg-green-100 text-green-700"
+                        : submission.verdict === "Wrong Answer"
+                          ? "bg-red-100 text-red-700"
+                          : submission.verdict === "Time Limit Exceeded"
+                            ? "bg-orange-100 text-orange-700"
+                            : submission.verdict === "Runtime Error"
+                              ? "bg-purple-100 text-purple-700"
+                              : submission.verdict === "Compilation Error"
+                                ? "bg-pink-100 text-pink-700"
+                                : "bg-gray-100 text-gray-700"
+                    }`}
+                  >
+                    {submission.verdict}
+                  </span>
+                </td>
+
+                <td className="px-6 py-4 capitalize">{submission.language}</td>
+
+                <td className="px-6 py-4">{submission.status}</td>
+
+                <td className="px-6 py-4">{submission.runtime ?? "-"}</td>
+
+                <td className="px-6 py-4">{submission.memory ?? "-"}</td>
+
+                <td className="px-6 py-4 text-gray-500">
+                  {new Date(submission.createdAt).toLocaleString("en-IN", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

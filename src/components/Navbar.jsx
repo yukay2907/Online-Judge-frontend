@@ -36,22 +36,38 @@ function Navbar() {
   };
 
   return (
-    <nav>
-      <h2>Online Judge</h2>
+    <nav className="bg-white border-b shadow-sm">
+      <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+        <Link to="/" className="text-2xl font-bold text-blue-600">
+          CodeX
+        </Link>
 
-      <ul>
-        {navItems.map((item) => {
-          return (
+        <ul className="flex items-center gap-6">
+          {navItems.map((item) => (
             <li key={item.name}>
               {item.name === "Logout" ? (
-                <button onClick={handleLogout}>{item.name}</button>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+                >
+                  Logout
+                </button>
               ) : (
-                <Link to={item.path}>{item.name}</Link>
+                <Link
+                  to={item.path}
+                  className={
+                    item.name === "Register"
+                      ? "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                      : "text-gray-700 hover:text-blue-600 transition"
+                  }
+                >
+                  {item.name}
+                </Link>
               )}
             </li>
-          );
-        })}
-      </ul>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 }
