@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Submissions from "../pages/Submissions";
 import ProtectedRoute from "../components/ProtectedRoute";
+import ProblemDetails from "../pages/ProblemDetails";
 
 function AppRoutes() {
   return (
@@ -15,6 +16,7 @@ function AppRoutes() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/problems" element={<Problems />} />
+          <Route path="/problems/:problemId" element={<ProblemDetails />} />
           <Route
             path="/submissions"
             element={

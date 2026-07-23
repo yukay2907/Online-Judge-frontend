@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import problemApi from "../api/problemApi";
 
@@ -34,10 +35,12 @@ function Problems() {
         <p>No problems found.</p>
       ) : (
         problems.map((problem) => (
-          <div key={problem._id}>
-            <h2>{problem.title}</h2>
-            <p>{problem.difficulty}</p>
-          </div>
+          <Link key={problem._id} to={`/problems/${problem._id}`}>
+            <div>
+              <h2>{problem.title}</h2>
+              <p>{problem.difficulty}</p>
+            </div>
+          </Link>
         ))
       )}
     </div>
