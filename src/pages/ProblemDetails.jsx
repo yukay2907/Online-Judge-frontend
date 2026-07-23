@@ -10,6 +10,8 @@ function ProblemDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [code, setCode] = useState("");
   const [submission, setSubmission] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function fetchProblem() {
@@ -31,6 +33,8 @@ function ProblemDetails() {
       return;
     }
 
+    setIsSubmitting(true);
+
     try {
       const createdSubmission = await submissionApi.createSubmission({
         problemId,
@@ -39,8 +43,13 @@ function ProblemDetails() {
       });
 
       setSubmission(createdSubmission);
+      setError(null);
     } catch (error) {
       console.error(error);
+
+      setError(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -73,9 +82,14 @@ function ProblemDetails() {
         onChange={(e) => setCode(e.target.value)}
         rows={15}
         cols={80}
+        placeholder="Write your Python solution here..."
       />
 
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit} disabled={isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Submit"}
+      </button>
+
+      {error && <p>Error: {error}</p>}
 
       {submission && (
         <div>

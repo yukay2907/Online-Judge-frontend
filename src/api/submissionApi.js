@@ -10,4 +10,10 @@ const createSubmission = async ({ problemId, language, code }) => {
   return response.data.data;
 };
 
-export default { createSubmission };
+const getSubmissions = async () => {
+  const response = await api.get("/submissions");
+
+  return response.data.data;
+};
+
+export default { createSubmission, getSubmissions };
