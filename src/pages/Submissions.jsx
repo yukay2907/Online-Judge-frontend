@@ -65,7 +65,9 @@ function Submissions() {
                 className="border-t hover:bg-gray-50 transition"
               >
                 <td className="px-6 py-4 font-medium">
-                  {submission.problem.title}
+                  {submission.problem
+                    ? submission.problem.title
+                    : "Problem Deleted"}
                 </td>
 
                 <td className="px-6 py-4">
